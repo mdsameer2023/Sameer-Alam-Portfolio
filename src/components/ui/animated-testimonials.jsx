@@ -11,6 +11,7 @@ export const AnimatedTestimonials = ({
   autoplay = false,
 }) => {
   const [active, setActive] = useState(0);
+  const [isHeld, setIsHeld] = useState(false);
 
   const handleNext = () => {
     setActive((prev) => (prev + 1) % testimonials.length);
@@ -25,11 +26,11 @@ export const AnimatedTestimonials = ({
   };
 
   useEffect(() => {
-    if (autoplay) {
+    if (autoplay && !isHeld) {
       const interval = setInterval(handleNext, 5000);
       return () => clearInterval(interval);
     }
-  }, [autoplay, testimonials.length]);
+  }, [autoplay, isHeld, testimonials.length]);
 
   const getRotation = (index) => {
     const rotations = [-6, 5, -3, 7, -5];
@@ -37,7 +38,15 @@ export const AnimatedTestimonials = ({
   };
 
   return (
-    <div style={{ position: "relative", zIndex: 10 }} className="mx-auto max-w-sm px-4 py-8 font-sans antialiased md:max-w-4xl md:px-8 lg:px-12">
+    <div
+      onMouseDown={() => setIsHeld(true)}
+      onMouseUp={() => setIsHeld(false)}
+      onMouseLeave={() => setIsHeld(false)}
+      onTouchStart={() => setIsHeld(true)}
+      onTouchEnd={() => setIsHeld(false)}
+      style={{ position: "relative", zIndex: 10 }}
+      className="mx-auto max-w-sm px-4 py-8 font-sans antialiased md:max-w-4xl md:px-8 lg:px-12 select-none"
+    >
       <div className="relative grid grid-cols-1 gap-12 md:gap-20 md:grid-cols-2">
         <div>
           <div className="relative h-80 w-full" style={{ minHeight: "320px" }}>
@@ -115,7 +124,7 @@ export const AnimatedTestimonials = ({
             <p style={{ ...mono, color: c.inkSoft }} className="text-xs uppercase tracking-wider mt-1">
               {testimonials[active].designation}
             </p>
-            
+
             <p style={{ ...serif, color: c.inkSoft, fontStyle: "italic", lineHeight: 1.6 }} className="mt-8 text-lg md:text-xl">
               "{testimonials[active].quote}"
             </p>

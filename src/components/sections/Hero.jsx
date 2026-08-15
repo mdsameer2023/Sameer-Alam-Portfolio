@@ -102,7 +102,7 @@ export default function Hero() {
 
             <div style={{ marginTop: 32 }}>
               <a
-                href="/Keshav_Kashyap_Resume_new.pdf"
+                href="/keshav_software_eng_new.pdf"
                 download="Keshav_Kashyap_Resume.pdf"
                 style={{
                   ...mono,

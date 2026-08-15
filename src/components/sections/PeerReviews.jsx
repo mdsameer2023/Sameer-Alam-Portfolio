@@ -44,8 +44,18 @@ export default function PeerReviews() {
 
   return (
     <section id="peer-reviews" style={{ padding: "100px 0", position: "relative" }}>
-      {/* Background layer for section */}
-      <div style={{ position: "absolute", inset: 0, background: c.bg, zIndex: -1, pointerEvents: "none" }} />
+      {/* Translucent background with backdrop blur so mouse animations show behind */}
+      <div
+        style={{
+          position: "absolute",
+          inset: 0,
+          background: "rgba(214, 205, 178, 0.42)",
+          backdropFilter: "blur(18px)",
+          WebkitBackdropFilter: "blur(18px)",
+          zIndex: 0,
+          pointerEvents: "none",
+        }}
+      />
 
       <div style={{ position: "relative", zIndex: 5, maxWidth: 1080, margin: "0 auto", padding: "0 32px", width: "100%" }}>
         <SectionHead index="08" title="Featured" em="testimonials" />

@@ -7,10 +7,7 @@ import Hero from "../components/sections/Hero";
 import About from "../components/sections/About";
 import Experience from "../components/sections/Experience";
 import Projects from "../components/sections/Projects";
-import ProjectDeck from "../components/sections/ProjectDeck";
 import Skills from "../components/sections/Skills";
-import Beyond from "../components/sections/Beyond";
-import Reviews from "../components/sections/Reviews";
 import Playground from "../components/sections/Playground";
 import Contact from "../components/sections/Contact";
 import PeerReviews from "../components/sections/PeerReviews";
@@ -19,6 +16,7 @@ import ImagesBadgeDemoTwo from "../components/images-badge-demo-2";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Lenis from "lenis";
+import Cards from "@/blocks/interface-crafts-cards";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -199,9 +197,8 @@ export default function Portfolio() {
           <Hero />
           <About />
           <Experience />
-          {/* <ImagesBadgeDemoTwo /> */}
-          {/* <Projects /> */}
-          <ProjectDeck />
+          <Projects />
+
         </div>
 
         {/* Skills Section has zIndex: 1 (swarm floats on top) */}
@@ -219,8 +216,10 @@ export default function Portfolio() {
           />
         </div>
 
-        {/* PeerReviews section (zIndex: auto - swarm floats between background/photos) */}
-        <PeerReviews />
+        {/* PeerReviews section (zIndex: 5 - swarm floats behind with backdrop blur) */}
+        <div style={{ position: "relative", zIndex: 5 }}>
+          <PeerReviews />
+        </div>
 
         {/* Contact & Footer (zIndex: 5 - swarm floats behind) */}
         <div style={{ position: "relative", zIndex: 5 }}>

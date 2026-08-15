@@ -8,7 +8,7 @@ import { FaGithub as Github, FaYoutube as Youtube, FaLinkedin as Linkedin } from
 export default function Contact() {
   return (
     <section id="contact" style={{ padding: "100px 0", background: c.bgDeep, backdropFilter: "blur(12px)", WebkitBackdropFilter: "blur(12px)" }}>
-      <div style={{ maxWidth: 1080, margin: "0 auto", padding: "0 32px" }}>
+      <div style={{ maxWidth: 1080, margin: "0 auto", padding: "0 32px" }}  >
         <SectionHead index="06" title="Let's" em="talk" />
         <Reveal style={{ marginTop: 24 }}>
           <p style={{ ...serif, fontStyle: "italic", fontWeight: 400, fontSize: "clamp(32px, 5vw, 60px)", maxWidth: 700, lineHeight: 1.1, color: c.ink }}>
