@@ -101,6 +101,17 @@ export default function Navbar() {
           color: ${c.paper} !important;
         }
 
+        .kk-navlink {
+          display: inline-block;
+          transition: color 220ms ease, transform 220ms ease;
+        }
+        @media (hover: hover) {
+          .kk-navlink:hover { transform: translateY(-2px); }
+        }
+        @media (prefers-reduced-motion: reduce) {
+          .kk-navlink { transition: none; }
+          .kk-navlink:hover { transform: none; }
+        }
         /* Responsive styling */
         @media (max-width: 850px) {
           .kk-nav-links {
@@ -137,13 +148,25 @@ export default function Navbar() {
             font-size: 10px;
           }
         }
+        @media (max-width: 850px) {
+          .kk-navbar-inner { height: auto; min-height: 64px; flex-wrap: wrap; gap: 10px 12px; }
+          .kk-logo { order: 1; }
+          .kk-hire-btn { order: 2; margin-left: auto; min-height: 36px; }
+          .kk-nav-links { order: 3; flex-basis: 100%; min-width: 0; gap: 22px; overflow-x: auto; scrollbar-width: none; padding: 2px 0 4px; }
+          .kk-nav-links::-webkit-scrollbar { display: none; }
+          .kk-nav-links .kk-navlink { display: block; flex: 0 0 auto; }
+        }
+        @media (max-width: 520px) {
+          .kk-navbar-inner { height: auto; padding: 10px 20px; }
+          .kk-nav-links { gap: 20px; }
+        }
       `}</style>
 
       <nav className={`kk-navbar-container ${isVisible ? "" : "kk-navbar-hidden"}`}>
         <div className="kk-navbar-inner">
           {/* Logo */}
           <a href="#" className="kk-logo" style={{ ...mono }}>
-            KK
+            SA
           </a>
 
           {/* Navigation Links */}
@@ -156,6 +179,7 @@ export default function Navbar() {
                 style={{
                   ...mono,
                   fontSize: 12,
+                  fontWeight: 600,
                   letterSpacing: 1,
                   textTransform: "uppercase",
                   color: c.inkSoft,

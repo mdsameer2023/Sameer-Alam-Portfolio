@@ -15,7 +15,6 @@ import FloatingSkills from "../components/ui/FloatingSkills";
 import ImagesBadgeDemoTwo from "../components/images-badge-demo-2";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import Lenis from "lenis";
 import Cards from "@/blocks/interface-crafts-cards";
 
 gsap.registerPlugin(ScrollTrigger);
@@ -48,8 +47,10 @@ export default function Portfolio() {
       if (section) {
         const rect = section.getBoundingClientRect();
         setIsHoveringSkills(
-          clientX >= rect.left && clientX <= rect.right &&
-          clientY >= rect.top && clientY <= rect.bottom
+          clientX >= rect.left &&
+            clientX <= rect.right &&
+            clientY >= rect.top &&
+            clientY <= rect.bottom,
         );
       } else {
         setIsHoveringSkills(false);
@@ -64,19 +65,25 @@ export default function Portfolio() {
         const sRect = sectionEl.getBoundingClientRect();
 
         // 1. Is hover in pool area? (Controls floating skills morph)
-        const inPool = (
-          clientX >= pRect.left && clientX <= pRect.right &&
-          clientY >= pRect.top && clientY <= pRect.bottom
-        );
+        const inPool =
+          clientX >= pRect.left &&
+          clientX <= pRect.right &&
+          clientY >= pRect.top &&
+          clientY <= pRect.bottom;
         setIsHoveringPool(inPool);
 
         // 2. Is hover in playground section (with buffer)? (Controls game reset on scroll away)
-        setIsHoveringPlayground(prev => {
+        setIsHoveringPlayground((prev) => {
           if (!prev) {
             if (inPool) return true;
             return false;
           } else {
-            if (clientY < sRect.top - 50 || clientY > sRect.bottom + 50 || clientX < sRect.left - 50 || clientX > sRect.right + 50) {
+            if (
+              clientY < sRect.top - 50 ||
+              clientY > sRect.bottom + 50 ||
+              clientX < sRect.left - 50 ||
+              clientX > sRect.right + 50
+            ) {
               return false;
             }
             return true;
@@ -102,34 +109,23 @@ export default function Portfolio() {
     };
   }, []);
 
-  // Global Lenis Smooth Scroll Initialization synchronized with GSAP ScrollTrigger
-  useEffect(() => {
-    const lenis = new Lenis({
-      duration: 1.2,
-      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-      smoothWheel: true,
-    });
-
-    lenis.on("scroll", ScrollTrigger.update);
-
-    const updateTicker = (time) => {
-      lenis.raf(time * 1000);
-    };
-    gsap.ticker.add(updateTicker);
-    gsap.ticker.lagSmoothing(0);
-
-    return () => {
-      lenis.destroy();
-      gsap.ticker.remove(updateTicker);
-    };
-  }, []);
-
   const isSwarmHidden = isHoveringPool || gameState !== "idle";
 
   return (
     <LayoutGroup>
-      <div style={{ ...sans, background: c.bg, color: c.ink, overflowX: "hidden", minHeight: "100vh" }}>
-        <FloatingSkills isDocked={isHoveringSkills} isHidden={isSwarmHidden} placedSkills={placedSkills} />
+      <div
+        style={{
+          ...sans,
+          background: c.bg,
+          color: c.ink,
+          overflowX: "clip",
+          minHeight: "100vh",
+        }}>
+        <FloatingSkills
+          isDocked={isHoveringSkills}
+          isHidden={isSwarmHidden}
+          placedSkills={placedSkills}
+        />
 
         {/* Standard Portfolio Styles */}
         <style>{`
@@ -198,7 +194,6 @@ export default function Portfolio() {
           <About />
           <Experience />
           <Projects />
-
         </div>
 
         {/* Skills Section has zIndex: 1 (swarm floats on top) */}

@@ -17,7 +17,7 @@ body {
 }
 
 body {
-  overflow-x: hidden;
+  overflow-x: clip;
 }
 
 /* Recommended for Lenis */
@@ -160,4 +160,30 @@ html.lenis body {
   html {
     @apply font-sans;
   }
+}
+/* Responsive portfolio layout */
+@media (max-width: 850px) {
+  #hero-section { padding-top: 140px !important; }
+  .kk-grid-collapse, .kk-grid-3 { min-width: 0; }
+  .kk-grid-collapse > *, .kk-grid-3 > * { min-width: 0; }
+}
+@media (max-width: 800px) {
+  #hero-section { min-height: auto !important; padding: 140px 24px 56px !important; }
+  #hero-section .kk-grid-collapse { gap: 24px !important; }
+  .kk-hero-title { font-size: clamp(29px, 7vw, 50px) !important; }
+  .kk-hero-heading-line { white-space: normal !important; }
+  .kk-hero-stats { gap: 12px !important; margin-top: 28px !important; }
+  .kk-hero-stats > div { flex: 1 1 125px !important; padding: 16px !important; }
+  #about, #experience, #skills, #playground, #work { padding-top: 72px !important; padding-bottom: 72px !important; }
+  .kk-milestone-card-container { min-width: 0; }
+  .kk-milestone-card-container > div > div { padding: 22px !important; overflow-wrap: anywhere; }
+}
+@media (max-width: 420px) {
+  #hero-section { padding-left: 20px !important; padding-right: 20px !important; }
+  .kk-hero-title { font-size: clamp(27px, 7.4vw, 32px) !important; }
+  .kk-hero-stats > div { flex-basis: 110px !important; }
+  .kk-milestone-row { grid-template-columns: 48px minmax(0, 1fr) !important; gap: 12px !important; }
+  .kk-road-track { left: 24px !important; }
+  .kk-milestone-date { padding: 6px 5px !important; max-width: 58px; overflow-wrap: anywhere; }
+  .kk-milestone-card-container > div > div { padding: 18px !important; }
 }

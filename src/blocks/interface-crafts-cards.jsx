@@ -7,38 +7,38 @@ import { mono, serif } from "@/data/theme";
 
 const defaultSpring = {
   type: "spring",
-  visualDuration: 0.6,
-  bounce: 0.25,
+  visualDuration: 0.5,
+  bounce: 0.12,
 };
 
 const cardConfigs = [
   {
-    y: -20,
-    rotate: -15,
+    y: -8,
+    rotate: -3,
     zIndex: 2,
     className: "bg-[#A4592F] text-white [&_h2]:text-white [&_p]:text-white/80", // Clay
   },
   {
-    y: 20,
-    rotate: 8,
+    y: 8,
+    rotate: 3,
     zIndex: 3,
     className: "bg-[#FAF7F0] text-[#2A271E] [&_h2]:text-[#2A271E] [&_p]:text-[#5B5643] border border-[rgba(42,39,30,0.12)]", // Paper/Parchment
   },
   {
-    y: -60,
-    rotate: -5,
+    y: -16,
+    rotate: -3,
     zIndex: 4,
     className: "bg-[#566047] text-white [&_h2]:text-white [&_p]:text-white/80", // Moss
   },
   {
-    y: 20,
-    rotate: 12,
+    y: 8,
+    rotate: 5,
     zIndex: 5,
     className: "bg-[#A98436] text-white [&_h2]:text-white [&_p]:text-white/80", // Gold
   },
   {
-    y: 20,
-    rotate: -5,
+    y: 8,
+    rotate: -3,
     zIndex: 6,
     className: "bg-[#2A271E] text-white [&_h2]:text-white [&_p]:text-white/80", // Ink
   },
@@ -68,13 +68,14 @@ export const Cards = ({
       config: {
         y: config.y,
         rotate: config.rotate,
-        zIndex: index + 2,
+        zIndex: projects.length - index + 2,
       },
     };
   });
 
   const [active, setActive] = useState(null);
   const [spacing, setSpacing] = useState(cardSpacing);
+  const [isCompact, setIsCompact] = useState(false);
   const ref = useRef(null);
 
   useEffect(() => {
@@ -93,12 +94,13 @@ export const Cards = ({
   useEffect(() => {
     const handleResize = () => {
       const w = window.innerWidth;
+      setIsCompact(w < 600);
       if (w >= 1024) {
         setSpacing(Math.round(cardSpacing * 0.78));
       } else if (w >= 600) {
         setSpacing(Math.round(cardSpacing * 0.55));
       } else {
-        setSpacing(Math.round(cardSpacing * 0.28));
+        setSpacing(Math.round(cardSpacing * 0.16));
       }
     };
     handleResize();
@@ -150,7 +152,7 @@ export const Cards = ({
                       ? card.config.y * 0.35
                       : card.config.y,
                   x: isCurrentActive(card)
-                    ? "-40%"
+                    ? (isCompact ? "0%" : "-40%")
                     : isAnyCardActive()
                       ? `calc(var(--width) * 0.96 + ${offsetX * 0.35}px)`
                       : offsetX,
@@ -158,7 +160,7 @@ export const Cards = ({
                     ? 0
                     : isAnyCardActive()
                       ? 0.15 * card.config.rotate
-                      : card.config.rotate,
+                      : card.config.rotate * (isCompact ? 0.55 : 1),
                   scale: isCurrentActive(card)
                     ? activeScale
                     : isAnyCardActive()
@@ -179,9 +181,10 @@ export const Cards = ({
                   marginLeft: `calc(var(--width) / -2)`,
                   marginTop: `calc(var(--height) / -2)`,
                   zIndex: isCurrentActive(card) ? 50 : card.config.zIndex,
+                  boxShadow: "0 16px 38px rgba(42, 39, 30, 0.18), 0 3px 10px rgba(42, 39, 30, 0.08)",
                 }}
                 className={cn(
-                  "absolute top-1/2 left-1/2 flex cursor-pointer flex-col items-start justify-start overflow-hidden rounded-2xl p-3 sm:p-4 shadow-xl transition-shadow duration-300 gap-2 sm:gap-2.5",
+                  "absolute top-1/2 left-1/2 flex cursor-pointer flex-col items-start justify-start overflow-hidden rounded-2xl p-3 sm:p-4 ring-1 ring-black/10 transition-shadow duration-300 gap-2 sm:gap-2.5",
                   card.className
                 )}
               >

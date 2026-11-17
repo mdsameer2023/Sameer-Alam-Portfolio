@@ -1,20 +1,40 @@
 import React from "react";
 import SectionHead from "../ui/SectionHead";
-import Cards from "@/blocks/interface-crafts-cards";
-import { c, mono } from "../../data/theme";
+import { projects } from "../../data/portfolioData";
+import "./SelectedWorkStack.css";
 
 export default function Projects() {
   return (
-    <section id="work" style={{ padding: "100px 0", position: "relative", overflow: "hidden" }}>
-      <div style={{ maxWidth: 1200, margin: "0 auto", padding: "0 24px", width: "100%", position: "relative", zIndex: 1 }}>
+    <section id="work" className="selected-work">
+      <div className="selected-work-inner">
         <SectionHead index="03" title="Selected" em="work" />
-
-        <p style={{ ...mono, fontSize: 13, color: c.clay, textAlign: "center", marginBottom: 50, textTransform: "uppercase", letterSpacing: 1.5 }}>
-          Click on any card to slide open technical details
-        </p>
-
-        <div className="mt-8 sm:mt-12 lg:mt-16">
-          <Cards />
+        <div className="selected-work-stack">
+          {projects.map((project, index) => (
+            <article className="selected-work-item" key={project.title} style={{ "--card-index": index }}>
+              <div className="selected-work-card">
+                <div className="selected-work-meta">
+                  <span>/ {String(index + 1).padStart(2, "0")}</span>
+                  <span>{project.badge || "Project"}</span>
+                </div>
+                <div className="selected-work-content">
+                  <div className="selected-work-copy">
+                    <h3>{project.title}</h3>
+                    <p>{project.desc}</p>
+                    <div className="selected-work-tags">
+                      {project.tags?.slice(0, 5).map((tag) => <span key={tag}>{tag}</span>)}
+                    </div>
+                    <div className="selected-work-actions">
+                      {project.live && <a href={project.live} target="_blank" rel="noopener noreferrer">Launch <span aria-hidden="true">↗</span></a>}
+                      {project.github && <a href={project.github} target="_blank" rel="noopener noreferrer">Source <span aria-hidden="true">↗</span></a>}
+                    </div>
+                  </div>
+                  <div className="selected-work-image">
+                    <img src={project.image} alt={`${project.title} project preview`} loading="lazy" />
+                  </div>
+                </div>
+              </div>
+            </article>
+          ))}
         </div>
       </div>
     </section>
